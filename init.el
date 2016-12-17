@@ -35,13 +35,13 @@
 ;; color-theme-solarized depends on color-theme
 (use-package color-theme)
 (use-package color-theme-solarized)
-(use-package evil-terminal-cursor-changer
-  :init
-  (setq cursor-type 'box)
-  (setq evil-normal-state-cursor '(box))
-  (setq evilmminsert-state-cursor '((bar . 5)))
-  :config
-  (evil-terminal-cursor-changer-activate))
+; (use-package evil-terminal-cursor-changer
+;   :init
+;   (setq cursor-type 'box)
+;   (setq evil-normal-state-cursor '(box))
+;   (setq evilmminsert-state-cursor '((bar . 5)))
+;   :config
+;   (evil-terminal-cursor-changer-activate))
 
 (use-package evil
   :config
@@ -96,9 +96,9 @@
   :config
   (column-marker-1 20))
 
-(use-package smartparens)
+;; (use-package smartparens)
 
-(use-package evil-smartparens)
+;; (use-package evil-smartparens)
 
 (defun my-dev-hooks ()
   (linum-relative-mode 1)
@@ -135,13 +135,33 @@
   :config
   (tern-mode 1))
 
-(use-package tide)
+(use-package tide
+  :init
+  (setq company-tooltip-align-annotations t)
+  (setq tide-tsserver-executable "node_modules/typescript/bin/tsserver")
+  ;; /Users/tbo/.nvm/versions/node/v6.8.1/bin/tsserver
+  (setq tide-format-options '())
+  :config
+  ;; (add-hook 'before-save-hook 'tide-format-before-save)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode))
 
 (use-package company-tern)
 
 (use-package indent-guide
   :config
   (indent-guide-global-mode))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
 
 (use-package web-mode
   :init
@@ -153,14 +173,14 @@
   (add-hook 'web-mode-hook
             (lambda ()
               (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (setq tide-tsserver-directory "/home/tbo/rebelle/node_modules/typescript/lib")
-                (setq tide-tsserver-executable "/home/tbo/rebelle/node_modules/typescript/bin/tsserver")
-                (tide-setup)
+                ;; (setq tide-tsserver-directory "/home/tbo/rebelle/node_modules/typescript/lib")
+                ;; (setq tide-tsserver-executable "/home/tbo/rebelle/node_modules/typescript/bin/tsserver")
+                (setup-tide-mode)
                 (setq flycheck-check-syntax-automatically '(save mode-enabled))
                 (eldoc-mode +1))))
   (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode)))
 
-(require 'editorconfig
+(use-package editorconfig
          :config
          (editorconfig-mode 1))
 
@@ -190,6 +210,8 @@
   (add-hook 'haskell-mode-hook 'intero-mode)
   (add-hook 'intero-mode-hook 'my-dev-hooks))
 
+(use-package lua-mode)
+
 (add-hook 'emacs-lisp-mode-hook 'my-dev-hooks)
 (add-hook 'latex-mode-hook 'my-dev-hooks)
 (add-hook 'java-mode-hook 'my-dev-hooks)
@@ -201,6 +223,7 @@
 (add-hook 'feature-mode-hook 'my-dev-hooks)
 (add-hook 'less-css-mode-hook 'my-dev-hooks)
 (add-hook 'haskell-mode-hook 'my-dev-hooks)
+(add-hook 'lua-mode-hook 'my-dev-hooks)
 (add-hook 'typescript-mode-hook
           (lambda ()
             (setq web-mode-tag-auto-close-style 1)
