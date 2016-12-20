@@ -15,6 +15,7 @@
 (menu-bar-mode -1)
 (global-auto-revert-mode 1)
 (setq auto-revert-check-vc-info t)
+(setq vc-follow-symlinks t)
 ;; Show current line and column number in mode line
 (setq column-number-mode t)
 
@@ -35,13 +36,6 @@
 ;; color-theme-solarized depends on color-theme
 (use-package color-theme)
 (use-package color-theme-solarized)
-; (use-package evil-terminal-cursor-changer
-;   :init
-;   (setq cursor-type 'box)
-;   (setq evil-normal-state-cursor '(box))
-;   (setq evilmminsert-state-cursor '((bar . 5)))
-;   :config
-;   (evil-terminal-cursor-changer-activate))
 
 (use-package evil
   :config
@@ -96,14 +90,8 @@
   :config
   (column-marker-1 20))
 
-;; (use-package smartparens)
-
-;; (use-package evil-smartparens)
-
 (defun my-dev-hooks ()
   (linum-relative-mode 1)
-  (smartparens-mode)
-  (evil-smartparens-mode)
   (whitespace-cleanup-mode))
 
 (use-package whitespace
