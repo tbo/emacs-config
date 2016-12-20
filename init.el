@@ -37,6 +37,10 @@
 (use-package color-theme)
 (use-package color-theme-solarized)
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 (use-package evil
   :config
   (evil-mode 1))
@@ -107,6 +111,10 @@
   (setq scroll-margin 0)
   :config
   (global-centered-cursor-mode +1))
+
+(use-package sublimity
+  :config
+  (sublimity-mode 1))
 
 (use-package company
   :init
@@ -281,7 +289,7 @@
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-    (smartparens evil-smartparens tide ensime markdown-mode whitespace-cleanup-mode web-mode use-package tidy sublimity spaceline solarized-theme scss-mode scala-mode2 relative-line-numbers powerline-evil php-mode mo-git-blame magit linum-relative less-css-mode jsx-mode json-mode indent-guide helm-projectile helm-ag git-gutter flycheck-typescript-tslint flycheck-flow flycheck-css-colorguard feature-mode evil-terminal-cursor-changer evil-multiedit evil-mc evil-easymotion evil-commentary evil-args emacs-eclim editorconfig-core editorconfig company-tern column-marker color-theme-solarized color-theme-sanityinc-solarized cider centered-cursor-mode ag ac-js2))))
+    (undo-tree smartparens evil-smartparens tide ensime markdown-mode whitespace-cleanup-mode web-mode use-package tidy sublimity spaceline solarized-theme scss-mode scala-mode2 relative-line-numbers powerline-evil php-mode mo-git-blame magit linum-relative less-css-mode jsx-mode json-mode indent-guide helm-projectile helm-ag git-gutter flycheck-typescript-tslint flycheck-flow flycheck-css-colorguard feature-mode evil-terminal-cursor-changer evil-multiedit evil-mc evil-easymotion evil-commentary evil-args emacs-eclim editorconfig-core editorconfig company-tern column-marker color-theme-solarized color-theme-sanityinc-solarized cider centered-cursor-mode ag ac-js2))))
 (load-theme 'solarized t)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
