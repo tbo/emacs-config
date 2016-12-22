@@ -18,10 +18,20 @@
 (setq vc-follow-symlinks t)
 ;; Show current line and column number in mode line
 (setq column-number-mode t)
-
                                         ; Performance improvement
 (setq redisplay-dont-pause t)
 (byte-recompile-directory (expand-file-name "~/.emacs.d"))
+
+                                        ; Custom handlers
+(defvar previous-line-number 0)
+
+(defun center-on-line-change ()
+  (let ((current-line-position (line-number-at-pos)))
+    (unless (eq previous-line-number current-line-position)
+        (recenter)
+        (setq previous-line-number current-line-position))))
+
+(add-to-list 'post-command-hook #'center-on-line-change)
 
                                         ; Package configuration
 (setq use-package-always-ensure t)
@@ -104,17 +114,6 @@
   (setq whitespace-line-column 120)
   :config
   (global-whitespace-mode t))
-
-(use-package centered-cursor-mode
-  :init
-  (setq scroll-step 1)
-  (setq scroll-margin 0)
-  :config
-  (global-centered-cursor-mode +1))
-
-(use-package sublimity
-  :config
-  (sublimity-mode 1))
 
 (use-package company
   :init
