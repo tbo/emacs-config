@@ -26,8 +26,9 @@
 (defvar previous-line-number 0)
 
 (defun center-on-line-change ()
-  (let ((current-line-position (line-number-at-pos)))
-    (unless (eq previous-line-number current-line-position)
+  (let (current-line-position (line-number-at-pos))
+    ;; (when (and (not (eq previous-line-number current-line-position)) (eq (current-buffer) (window-buffer (selected-window))))
+    (unless (and (eq previous-line-number current-line-position) (not (eq (current-buffer) (window-buffer (selected-window)))))
         (recenter)
         (setq previous-line-number current-line-position))))
 
